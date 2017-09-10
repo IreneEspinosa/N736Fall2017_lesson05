@@ -1,15 +1,21 @@
 ---
 title: "Data Wrangling"
 author: "Melinda K. Higgins, PhD."
-date: "September 10, 2017"
+date: "September 11, 2017"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
 ## Data Wrangling
+
+For today's lesson, you will want to download/make a copy of the Github repository [https://github.com/melindahiggins2000/N736Fall2017_lesson05](https://github.com/melindahiggins2000/N736Fall2017_lesson05). This repo contains 3 datasets we will be working with in the exercises below: `dataA.csv`; `dataB.csv` and `dataC.csv`.
+
+Today's lesson will cover these topics:
 
 * merging; joining; stacking; concatenating
 * adding labels and other notations
@@ -19,7 +25,43 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Merging datasets
 
+Often the data you want for your analyses will exist in different files. In order to complete your analyses, you will need to merge these data in some way. For the most part (at least for the focus of this course), your data will be rectangular - usually with the rows representing your samples or subjects - basically the "objects" you want to analyze - and your columns will be the attributes or variables of these "objects" (e.g. your measurements on your subjects or samples).
+
+Given this rectangular structure of your data, you will typically want to either add rows (add more subjects or samples), often as a result or data collected at a later time point that needs to be merged in for final analyses - OR - add columns (adding variables or other measurements taken on your samples/subjects), often as a resultsof data coming from another source (hospital records, laboratory results, etc).
+
+when adding rows ot columns **IT IS VERY IMPORTANT to ALWAYS read** the documentation for (a) the software you are using and (B) the details for the merging/joining procedure or function in the software you are using, i.e. check assumptions, parameters needed, and default settings. Some consideration include:
+
+* exact numbering or naming of your objects, samples or subjects - often the variable (field) that contains the number or label for your subjects will be used as the "KEY" reference for aligning and merging everything together so these should be checked carefully - especially for adding columns and aligning by row;
+* the variable names need to match EXACTLY when adding rows and aligning by column
+* determine whether you want all columns or rows kept even if they do not exist in both datasets (i.e. do you want to keep everything - think the "UNION" of 2 datasets or do you only want to keep items that exist in both datasets - think the "INTERSECTION" of 2 datasets - or possibly some variation of keeping everything that matches in 1 of the 2 datasets)...
+* always check for DUPLICATE issues which arise is you have the same subject IDs in both datasets when adding rows or duplicate column/variable names when adding columns... these need to be unique for the merge to work correctly.
+
 ### "Stacking" / "Concatenating" - adding rows - aligning columns (vars)
+
+When adding rows, it is assumed that the rows (new subjects, new samples) are DIFFERENT that what is in the current dataset. If needed, make sure to update the samepl/subject ID to reflect that the data in the new file is new or different otherwise the merge will not work. This is common when you have later time points or follow-up measures on subjects/samples that you already have at baseline. For the merge to work you will want to update your subject IDs to also include the time point information. For example assume you have a subject id `10023` and you have data at baseline (time 0) and data at 6 month and 12 months you want to add. In this case you should probably add 2 digits to the end of the subject ID to differentiate these different time points:
+
+* baseline subject id `1002300`
+* 6 months ID `1002306`
+* 12 months ID `1002312`
+
+or whatever works for you and your dataset.
+
+You should also consider what you want to do if the 2 datasets have some columns in common and some that are not in common and whether you want the final merged file to keep only the columns that are in common or all of the columns regardless of whether they are in dataset 1 or 2.
+
+Here is an example dataset:
+
+** Dataset `dataA` **
+
+---
+
+```{r}
+library(readr)
+dataA <- read_csv("dataA.csv")
+
+library(knitr)
+kable(dataA)
+```
+
 
 
 

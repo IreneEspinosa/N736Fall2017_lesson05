@@ -11,7 +11,7 @@
 
 <meta name="author" content="Melinda K. Higgins, PhD." />
 
-<meta name="date" content="2017-09-10" />
+<meta name="date" content="2017-09-11" />
 
 <title>Data Wrangling</title>
 
@@ -119,13 +119,15 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Data Wrangling</h1>
 <h4 class="author"><em>Melinda K. Higgins, PhD.</em></h4>
-<h4 class="date"><em>September 10, 2017</em></h4>
+<h4 class="date"><em>September 11, 2017</em></h4>
 
 </div>
 
 
 <div id="data-wrangling" class="section level2">
 <h2>Data Wrangling</h2>
+<p>For today’s lesson, you will want to download/make a copy of the Github repository <a href="https://github.com/melindahiggins2000/N736Fall2017_lesson05" class="uri">https://github.com/melindahiggins2000/N736Fall2017_lesson05</a>. This repo contains 3 datasets we will be working with in the exercises below: <code>dataA.csv</code>; <code>dataB.csv</code> and <code>dataC.csv</code>.</p>
+<p>Today’s lesson will cover these topics:</p>
 <ul>
 <li>merging; joining; stacking; concatenating</li>
 <li>adding labels and other notations</li>
@@ -136,8 +138,76 @@ $(document).ready(function () {
 </div>
 <div id="merging-datasets" class="section level2">
 <h2>Merging datasets</h2>
+<p>Often the data you want for your analyses will exist in different files. In order to complete your analyses, you will need to merge these data in some way. For the most part (at least for the focus of this course), your data will be rectangular - usually with the rows representing your samples or subjects - basically the “objects” you want to analyze - and your columns will be the attributes or variables of these “objects” (e.g. your measurements on your subjects or samples).</p>
+<p>Given this rectangular structure of your data, you will typically want to either add rows (add more subjects or samples), often as a result or data collected at a later time point that needs to be merged in for final analyses - OR - add columns (adding variables or other measurements taken on your samples/subjects), often as a resultsof data coming from another source (hospital records, laboratory results, etc).</p>
+<p>when adding rows ot columns <strong>IT IS VERY IMPORTANT to ALWAYS read</strong> the documentation for (a) the software you are using and (B) the details for the merging/joining procedure or function in the software you are using, i.e. check assumptions, parameters needed, and default settings. Some consideration include:</p>
+<ul>
+<li>exact numbering or naming of your objects, samples or subjects - often the variable (field) that contains the number or label for your subjects will be used as the “KEY” reference for aligning and merging everything together so these should be checked carefully - especially for adding columns and aligning by row;</li>
+<li>the variable names need to match EXACTLY when adding rows and aligning by column</li>
+<li>determine whether you want all columns or rows kept even if they do not exist in both datasets (i.e. do you want to keep everything - think the “UNION” of 2 datasets or do you only want to keep items that exist in both datasets - think the “INTERSECTION” of 2 datasets - or possibly some variation of keeping everything that matches in 1 of the 2 datasets)…</li>
+<li>always check for DUPLICATE issues which arise is you have the same subject IDs in both datasets when adding rows or duplicate column/variable names when adding columns… these need to be unique for the merge to work correctly.</li>
+</ul>
 <div id="stacking-concatenating---adding-rows---aligning-columns-vars" class="section level3">
 <h3>“Stacking” / “Concatenating” - adding rows - aligning columns (vars)</h3>
+<p>When adding rows, it is assumed that the rows (new subjects, new samples) are DIFFERENT that what is in the current dataset. If needed, make sure to update the samepl/subject ID to reflect that the data in the new file is new or different otherwise the merge will not work. This is common when you have later time points or follow-up measures on subjects/samples that you already have at baseline. For the merge to work you will want to update your subject IDs to also include the time point information. For example assume you have a subject id <code>10023</code> and you have data at baseline (time 0) and data at 6 month and 12 months you want to add. In this case you should probably add 2 digits to the end of the subject ID to differentiate these different time points:</p>
+<ul>
+<li>baseline subject id <code>1002300</code></li>
+<li>6 months ID <code>1002306</code></li>
+<li>12 months ID <code>1002312</code></li>
+</ul>
+<p>or whatever works for you and your dataset.</p>
+<p>You should also consider what you want to do if the 2 datasets have some columns in common and some that are not in common and whether you want the final merged file to keep only the columns that are in common or all of the columns regardless of whether they are in dataset 1 or 2.</p>
+<p>Here is an example dataset:</p>
+<p>** Dataset <code>dataA</code> **</p>
+<hr />
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="merging-joining---adding-columns-vars---aligning-rows" class="section level3">
 <h3>“Merging” / “Joining” - adding columns (vars) - aligning rows</h3>
@@ -151,7 +221,6 @@ $(document).ready(function () {
 <h2>R Markdown</h2>
 <p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
 <p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
 ##  1st Qu.:12.0   1st Qu.: 26.00  
