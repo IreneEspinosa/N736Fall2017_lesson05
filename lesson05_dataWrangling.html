@@ -164,7 +164,12 @@ $(document).ready(function () {
 <p>You should also consider what you want to do if the 2 datasets have some columns in common and some that are not in common and whether you want the final merged file to keep only the columns that are in common or all of the columns regardless of whether they are in dataset 1 or 2.</p>
 <p>Here is an example dataset:</p>
 <p>** Dataset <code>dataA</code> **</p>
-<hr />
+<p>** R CODE **</p>
+<pre class="r"><code>library(readr)
+dataA &lt;- read_csv(&quot;dataA.csv&quot;)
+
+library(knitr)
+kable(dataA)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -215,7 +220,9 @@ $(document).ready(function () {
 </table>
 <p>Let’s suppose we want to add more subjects from <code>dataB</code>:</p>
 <p>** Dataset <code>dataB</code> **</p>
-<hr />
+<p>** R CODE **</p>
+<pre class="r"><code>dataB &lt;- read_csv(&quot;dataB.csv&quot;)
+kable(dataB)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -264,32 +271,1936 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
+<p>The first thing you’ll notice is that only 2 variables (2 columns) <code>var1</code> and <code>var2</code> are in common for <code>dataA</code> and <code>dataB</code>. <code>dataA</code> has <code>var3</code> and <code>dataB</code> has <code>var4</code>.</p>
+<p>Suppose we want to keep ALL of the variables - for this (in <code>R code</code>) we will use the <code>dplyr</code> package and the <code>bind_rows</code> function. Learn more about <code>dplyr</code> at <a href="http://dplyr.tidyverse.org/" class="uri">http://dplyr.tidyverse.org/</a>.</p>
+<p>** R CODE **</p>
+<pre class="r"><code>library(dplyr)
+dataAB &lt;- bind_rows(dataA, dataB)</code></pre>
+<p>** Dataset <code>dataAB</code> **</p>
+<p>** R CODE **</p>
+<pre class="r"><code>kable(dataAB)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">4</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">2</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">3</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">5</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the <code>NA</code>a are placed for the rows that do not have data for the variables that were not in common: <code>var3</code> and <code>var4</code>.</p>
+<p>You can also use the <code>union_all</code> function from <code>dplyr</code>.</p>
+<p>** R CODE **</p>
+<pre class="r"><code>dataAB &lt;- union_all(dataA, dataB)
+kable(dataAB)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">4</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">2</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">3</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="left">f</td>
+<td align="right">NA</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">5</td>
+<td align="left">m</td>
+<td align="right">NA</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<p>Suppose we want only want to keep the 2 columns that are in common. In <code>R</code> after using <code>bind_rows</code>, use the <code>select</code> command to just keep <code>id</code>, <code>var1</code> and <code>var2</code>.</p>
+<p>** R CODE **</p>
+<pre class="r"><code>dataAB_var12 &lt;- dataAB %&gt;%
+  select(id,var1,var2)
+kable(dataAB_var12)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="left">f</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">4</td>
+<td align="left">m</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">2</td>
+<td align="left">m</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">3</td>
+<td align="left">f</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="left">f</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">5</td>
+<td align="left">m</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="sas-code-with-sashtml-output-using-ods-output" class="section level3">
+<h3>** SAS CODE with sasHTML output using ODS output **</h3>
+<p>Load datasets - ** BE SURE TO CHANGE THE CODE BELOW FOR YOUR FILE LOCATION **</p>
+<p>** SAS CODE **</p>
+<pre class="sashtml"><code>* ======================================;
+* load dataA;
+* ======================================;
+proc import datafile='C:\MyGithub\N736Fall2017_lesson05\dataA.csv'
+  out=dataA dbms=csv;
+run;
+
+* ======================================;
+* load dataB;  
+* ======================================;
+proc import datafile='C:\MyGithub\N736Fall2017_lesson05\dataB.csv'
+  out=dataB dbms=csv;
+run;</code></pre>
+<p>After loading <code>dataA</code> and <code>dataB</code> the <code>set</code> command within the <code>DATA</code> step concatenates or “stacks” the 2 datasets together. The columns from both datasets are retained even if they are no in common. Missing data is inserted for rows that didn’t have that variable in the other dataset.</p>
+<p>** SAS CODE **</p>
+<pre class="sashtml"><code>
+* ======================================;
+* concatenate dataA and dataB
+  add rows and keep columns in both;
+* ======================================;
+  
+data dataAB;
+  set dataA dataB;
+run;
+  
+proc print data=dataAB noobs; run;
+  </code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAB">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+<th class="r header" scope="col">
+var3
+</th>
+<th class="r header" scope="col">
+VAR4
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+44
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+34
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+5
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+38
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+8
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+41
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+9
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+39
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+11
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+0
+</td>
+</tr>
+<tr>
+<td class="r data">
+12
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+6
+</td>
+</tr>
+<tr>
+<td class="r data">
+14
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+4
+</td>
+</tr>
+<tr>
+<td class="r data">
+15
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+7
+</td>
+</tr>
+<tr>
+<td class="r data">
+17
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+8
+</td>
+</tr>
+<tr>
+<td class="r data">
+18
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+5
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
+</div>
+</div>
+<br>
+</div>
+<p>If you want you can use the <code>drop</code> or <code>keep</code> commands in a <code>DATA</code> step to get rid of the variables not in common.</p>
+<p>** SAS CODE **</p>
+<pre class="sashtml"><code>  
+* ======================================;
+* keep only var1 and var2;
+* ======================================; 
+  
+data dataAB_var12;
+  set dataAB;
+  drop var3 var4;
+run;
+  
+proc print data=dataAB_var12 noobs; run;  
+</code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAB_VAR12">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+5
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+8
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+<tr>
+<td class="r data">
+9
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+11
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+12
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+<tr>
+<td class="r data">
+14
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+<tr>
+<td class="r data">
+15
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+17
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+f
+</td>
+</tr>
+<tr>
+<td class="r data">
+18
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+m
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
+</div>
+</div>
+<br>
+</div>
 </div>
 <div id="merging-joining---adding-columns-vars---aligning-rows" class="section level3">
 <h3>“Merging” / “Joining” - adding columns (vars) - aligning rows</h3>
-<p>inner join</p>
-<p>outer join</p>
-<p>left join</p>
-<p>right join</p>
+<p>Jenny Bryan has an excellent discussion on the different “joins” for adding columns using <code>R</code> - see her lesson on this topic in her STAT245 course <a href="http://stat545.com/bit001_dplyr-cheatsheet.html" class="uri">http://stat545.com/bit001_dplyr-cheatsheet.html</a>.</p>
+<p>Also read through the details on “joins” in the “R for Data Science” book at <a href="http://r4ds.had.co.nz/relational-data.html#understanding-joins" class="uri">http://r4ds.had.co.nz/relational-data.html#understanding-joins</a>.</p>
+<p>I will not cover all of these, but do highlight some of the more common approaches.</p>
+<p>For this example we will work with <code>dataA</code> and <code>dataC</code> - here are what these 2 datasets look like:</p>
+<p>** R CODE **</p>
+<pre class="r"><code>dataC &lt;- read_csv(&quot;dataC.csv&quot;)</code></pre>
+<p>Dataset <code>dataA</code></p>
+<pre class="r"><code>kable(dataA)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+</tr>
+</tbody>
+</table>
+<p>Dataset <code>dataC</code></p>
+<pre class="r"><code>kable(dataC)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var5</th>
+<th align="right">var6</th>
+<th align="right">var7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">78</td>
+<td align="right">50</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">87</td>
+<td align="right">55</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">79</td>
+<td align="right">53</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">89</td>
+<td align="right">51</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">95</td>
+<td align="right">49</td>
+<td align="right">49</td>
+</tr>
+</tbody>
+</table>
+<p>So, only 3 ID’s 1,2,3 are in common between <code>dataA</code> and <code>dataC</code> - IDs 5,8,9 are only in <code>dataA</code> and IDs 4,7,10 are only in <code>dataC</code>.</p>
+<div id="inner-join" class="section level4">
+<h4>Inner Join</h4>
+<p>First, let’s try an <code>inner_join</code> which will keep only the IDs in common between the 2 datasets.</p>
+<pre class="r"><code>library(dplyr)
+dataAC_innerjoin &lt;- inner_join(dataA, dataC, by = &quot;id&quot;)
+kable(dataAC_innerjoin)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var5</th>
+<th align="right">var6</th>
+<th align="right">var7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">78</td>
+<td align="right">50</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">87</td>
+<td align="right">55</td>
+<td align="right">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="outer-join---full-join" class="section level4">
+<h4>Outer Join - Full Join</h4>
+<p>Next let’s keep all rows (all IDs) from both datasets - this is a <code>full_join</code>.</p>
+<pre class="r"><code>dataAC_fulljoin &lt;- full_join(dataA, dataC, by = &quot;id&quot;)
+kable(dataAC_fulljoin)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var5</th>
+<th align="right">var6</th>
+<th align="right">var7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">78</td>
+<td align="right">50</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">87</td>
+<td align="right">55</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">79</td>
+<td align="right">53</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">89</td>
+<td align="right">51</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">95</td>
+<td align="right">49</td>
+<td align="right">49</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="left-join" class="section level4">
+<h4>Left Join</h4>
+<p>Next let’s keep all rows (all IDs) from the “LEFT” (or first) dataset provided - adding only data for rows (IDs) that match in the 2nd dataset (in this example those in <code>dataA</code>) - this is a <code>left_join</code>.</p>
+<pre class="r"><code>dataAC_leftjoin &lt;- left_join(dataA, dataC, by = &quot;id&quot;)
+kable(dataAC_leftjoin)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var5</th>
+<th align="right">var6</th>
+<th align="right">var7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">78</td>
+<td align="right">50</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">87</td>
+<td align="right">55</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">38</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="left">m</td>
+<td align="right">41</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="left">f</td>
+<td align="right">39</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="right-join" class="section level4">
+<h4>Right Join</h4>
+<p>Similarly, you can do a “RIGHT” join keeping the rows (IDs) which match those in the 2nd listed dataset (in this example those in <code>dataC</code>) - this is a <code>right_join</code>.</p>
+<pre class="r"><code>dataAC_rightjoin &lt;- right_join(dataA, dataC, by = &quot;id&quot;)
+kable(dataAC_rightjoin)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var3</th>
+<th align="right">var5</th>
+<th align="right">var6</th>
+<th align="right">var7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">45</td>
+<td align="right">78</td>
+<td align="right">50</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">m</td>
+<td align="right">44</td>
+<td align="right">80</td>
+<td align="right">45</td>
+<td align="right">53</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">f</td>
+<td align="right">34</td>
+<td align="right">87</td>
+<td align="right">55</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">79</td>
+<td align="right">53</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">89</td>
+<td align="right">51</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">95</td>
+<td align="right">49</td>
+<td align="right">49</td>
+</tr>
+</tbody>
+</table>
+<p>** SAS Code **</p>
+<p>In <code>SAS</code> we’ll used <code>PROC SORT</code> to sort both datasets by <code>ID</code> and then used a <code>MERGE</code> command in a <code>DATA</code> step.</p>
+<p>Load the datasets <code>dataA</code> and <code>dataC</code>.</p>
+<pre class="sashtml"><code>* ======================================;
+* load dataC;  
+* ======================================;
+proc import datafile='C:\MyGithub\N736Fall2017_lesson05\dataC.csv'
+  out=dataC dbms=csv;
+run;</code></pre>
+<p>Sort both datasets by <code>id</code> and the use the <code>MERGE</code> command in a <code>DATA</code> step.</p>
+<pre class="sashtml"><code>proc sort data=dataA; by id; run;
+proc sort data=dataC; by id; run;
+
+data dataAC_fulljoin;
+  merge dataA dataC;
+  by id;
+run;
+
+proc print data=dataAC_fulljoin noobs; run;</code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAC_FULLJOIN">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+<th class="r header" scope="col">
+var3
+</th>
+<th class="r header" scope="col">
+var5
+</th>
+<th class="r header" scope="col">
+var6
+</th>
+<th class="r header" scope="col">
+var7
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+78
+</td>
+<td class="r data">
+50
+</td>
+<td class="r data">
+55
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+44
+</td>
+<td class="r data">
+80
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+53
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+34
+</td>
+<td class="r data">
+87
+</td>
+<td class="r data">
+55
+</td>
+<td class="r data">
+50
+</td>
+</tr>
+<tr>
+<td class="r data">
+4
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+79
+</td>
+<td class="r data">
+53
+</td>
+<td class="r data">
+51
+</td>
+</tr>
+<tr>
+<td class="r data">
+5
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+38
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+7
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+89
+</td>
+<td class="r data">
+51
+</td>
+<td class="r data">
+56
+</td>
+</tr>
+<tr>
+<td class="r data">
+8
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+41
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+9
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+39
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+10
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+95
+</td>
+<td class="r data">
+49
+</td>
+<td class="r data">
+49
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
 </div>
 </div>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<br>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAAXVBMVEUAAAAAADoAAGYAOjoAOpAAZpAAZrY6AAA6OgA6kLY6kNtmAABmtrZmtv+QOgCQZgCQkNuQ29uQ2/+2ZgC2/7a2///bkDrbtmbb/9vb////tmb/25D//7b//9v///+8jXATAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3da2PTSICmUdPDwC4s7A7eziwG8v9/5lq+ypcE601FVWWf86UhYLlaiR8kq1RePAMQWdQeAECvBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAobYDugAopnyiim+xoNp7G7gvxRtVeoNnloeRf5r+4Hf4BwN4WJ0F9Oms/lMbKqBAOV0F9Nfni+Pnf/6dtAUBBcrpKaB/vp8W8/fX9e8//pyyCQEFyukpoKuLXA5J/TZlEwIKlNNTQJeXJ+zrg9BJb4MKKFBORwFdH25+ufji07RzeAEFyukooOujzcvT9dW0y0gCCpQjoAChjgLq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" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<p>For an inner join you need to name the datasets using the <code>(in=name)</code> for each dataset and then use the <code>if</code> command to state which dataset should govern which rows are kept. To keep only rows in common in both <code>dataA</code> and <code>dataC</code> I used the <code>if A and C</code> command below.</p>
+<pre class="sashtml"><code>data dataAC_innerjoin;
+  merge dataA(in=A) dataC(in=C);
+  by id;
+  if A and C;
+run;
+
+proc print data=dataAC_innerjoin noobs; run;</code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAC_INNERJOIN">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+<th class="r header" scope="col">
+var3
+</th>
+<th class="r header" scope="col">
+var5
+</th>
+<th class="r header" scope="col">
+var6
+</th>
+<th class="r header" scope="col">
+var7
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+78
+</td>
+<td class="r data">
+50
+</td>
+<td class="r data">
+55
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+44
+</td>
+<td class="r data">
+80
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+53
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+34
+</td>
+<td class="r data">
+87
+</td>
+<td class="r data">
+55
+</td>
+<td class="r data">
+50
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
+</div>
+</div>
+<br>
+</div>
+<p>For an left join you need to name the datasets using the <code>(in=name)</code> for each dataset and then use the <code>if</code> command to state which dataset should govern which rows are kept. To keep only rows in <code>dataA</code> I used the <code>if A</code> command below.</p>
+<pre class="sashtml"><code>data dataAC_leftjoin;
+  merge dataA(in=A) dataC(in=C);
+  by id;
+  if A;
+run;
+
+proc print data=dataAC_leftjoin noobs; run;</code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAC_LEFTJOIN">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+<th class="r header" scope="col">
+var3
+</th>
+<th class="r header" scope="col">
+var5
+</th>
+<th class="r header" scope="col">
+var6
+</th>
+<th class="r header" scope="col">
+var7
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+78
+</td>
+<td class="r data">
+50
+</td>
+<td class="r data">
+55
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+44
+</td>
+<td class="r data">
+80
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+53
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+34
+</td>
+<td class="r data">
+87
+</td>
+<td class="r data">
+55
+</td>
+<td class="r data">
+50
+</td>
+</tr>
+<tr>
+<td class="r data">
+5
+</td>
+<td class="r data">
+4
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+38
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+8
+</td>
+<td class="r data">
+1
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+41
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+<tr>
+<td class="r data">
+9
+</td>
+<td class="r data">
+5
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+39
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+.
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
+</div>
+</div>
+<br>
+</div>
+<p>For an right join you need to name the datasets using the <code>(in=name)</code> for each dataset and then use the <code>if</code> command to state which dataset should govern which rows are kept. To keep only rows in <code>dataC</code> I used the <code>if C</code> command below.</p>
+<pre class="sashtml"><code>data dataAC_rightjoin;
+  merge dataA(in=A) dataC(in=C);
+  by id;
+  if C;
+run;
+
+proc print data=dataAC_rightjoin noobs; run;</code></pre>
+<div class="branch">
+<a name="IDX"></a>
+<div>
+<div align="center">
+<!--BEGINTABLE-->
+<table class="table" cellspacing="0" cellpadding="7" rules="groups" frame="hsides" summary="Procedure Print: Data Set WORK.DATAAC_RIGHTJOIN">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="r header" scope="col">
+id
+</th>
+<th class="r header" scope="col">
+var1
+</th>
+<th class="l header" scope="col">
+var2
+</th>
+<th class="r header" scope="col">
+var3
+</th>
+<th class="r header" scope="col">
+var5
+</th>
+<th class="r header" scope="col">
+var6
+</th>
+<th class="r header" scope="col">
+var7
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="r data">
+1
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+78
+</td>
+<td class="r data">
+50
+</td>
+<td class="r data">
+55
+</td>
+</tr>
+<tr>
+<td class="r data">
+2
+</td>
+<td class="r data">
+3
+</td>
+<td class="l data">
+m
+</td>
+<td class="r data">
+44
+</td>
+<td class="r data">
+80
+</td>
+<td class="r data">
+45
+</td>
+<td class="r data">
+53
+</td>
+</tr>
+<tr>
+<td class="r data">
+3
+</td>
+<td class="r data">
+2
+</td>
+<td class="l data">
+f
+</td>
+<td class="r data">
+34
+</td>
+<td class="r data">
+87
+</td>
+<td class="r data">
+55
+</td>
+<td class="r data">
+50
+</td>
+</tr>
+<tr>
+<td class="r data">
+4
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+79
+</td>
+<td class="r data">
+53
+</td>
+<td class="r data">
+51
+</td>
+</tr>
+<tr>
+<td class="r data">
+7
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+89
+</td>
+<td class="r data">
+51
+</td>
+<td class="r data">
+56
+</td>
+</tr>
+<tr>
+<td class="r data">
+10
+</td>
+<td class="r data">
+.
+</td>
+<td class="l data">
+</td>
+<td class="r data">
+.
+</td>
+<td class="r data">
+95
+</td>
+<td class="r data">
+49
+</td>
+<td class="r data">
+49
+</td>
+</tr>
+</tbody>
+</table>
+<!--ENDTABLE-->
+</div>
+</div>
+<br>
+</div>
+</div>
+</div>
 </div>
 
 
