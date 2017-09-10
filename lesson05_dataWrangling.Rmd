@@ -13,7 +13,11 @@ knitr::opts_chunk$set(warning = FALSE)
 
 ## Data Wrangling
 
-For today's lesson, you will want to download/make a copy of the Github repository [https://github.com/melindahiggins2000/N736Fall2017_lesson05](https://github.com/melindahiggins2000/N736Fall2017_lesson05). This repo contains 3 datasets we will be working with in the exercises below: `dataA.csv`; `dataB.csv` and `dataC.csv`.
+For today's lesson, you will want to download/make a copy of the Github repository [https://github.com/melindahiggins2000/N736Fall2017_lesson05](https://github.com/melindahiggins2000/N736Fall2017_lesson05). This repo contains 3 datasets we will be working with in the exercises below: 
+
+* `dataA.csv` - has 3 variables (var1, var2, var3) and 6 subjects (1,2,3,5,8,9)
+* `dataB.csv` - has 3 variables: 2 same and 1 different than `dataA` (var1, var2, var4) and 6 more subjects (11,12,14,15,17,18)
+* `dataC.csv` - has 3 more variables (var5, var6, var7) and 6 subjects (1,2,3,4,7,10) some in common with `dataA` and some different
 
 Today's lesson will cover these topics:
 
@@ -61,6 +65,19 @@ dataA <- read_csv("dataA.csv")
 library(knitr)
 kable(dataA)
 ```
+
+Let's suppose we want to add more subjects from `dataB`:
+
+** Dataset `dataB` **
+
+---
+
+```{r}
+dataB <- read_csv("dataB.csv")
+kable(dataB)
+```
+
+
 
 
 

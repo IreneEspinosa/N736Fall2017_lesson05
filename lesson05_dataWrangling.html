@@ -126,7 +126,12 @@ $(document).ready(function () {
 
 <div id="data-wrangling" class="section level2">
 <h2>Data Wrangling</h2>
-<p>For today’s lesson, you will want to download/make a copy of the Github repository <a href="https://github.com/melindahiggins2000/N736Fall2017_lesson05" class="uri">https://github.com/melindahiggins2000/N736Fall2017_lesson05</a>. This repo contains 3 datasets we will be working with in the exercises below: <code>dataA.csv</code>; <code>dataB.csv</code> and <code>dataC.csv</code>.</p>
+<p>For today’s lesson, you will want to download/make a copy of the Github repository <a href="https://github.com/melindahiggins2000/N736Fall2017_lesson05" class="uri">https://github.com/melindahiggins2000/N736Fall2017_lesson05</a>. This repo contains 3 datasets we will be working with in the exercises below:</p>
+<ul>
+<li><code>dataA.csv</code> - has 3 variables (var1, var2, var3) and 6 subjects (1,2,3,5,8,9)</li>
+<li><code>dataB.csv</code> - has 3 variables: 2 same and 1 different than <code>dataA</code> (var1, var2, var4) and 6 more subjects (11,12,14,15,17,18)</li>
+<li><code>dataC.csv</code> - has 3 more variables (var5, var6, var7) and 6 subjects (1,2,3,4,7,10) some in common with <code>dataA</code> and some different</li>
+</ul>
 <p>Today’s lesson will cover these topics:</p>
 <ul>
 <li>merging; joining; stacking; concatenating</li>
@@ -205,6 +210,57 @@ $(document).ready(function () {
 <td align="right">5</td>
 <td align="left">f</td>
 <td align="right">39</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s suppose we want to add more subjects from <code>dataB</code>:</p>
+<p>** Dataset <code>dataB</code> **</p>
+<hr />
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="left">var2</th>
+<th align="right">var4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">4</td>
+<td align="left">f</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">4</td>
+<td align="left">m</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">2</td>
+<td align="left">m</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">3</td>
+<td align="left">f</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="left">f</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">5</td>
+<td align="left">m</td>
+<td align="right">5</td>
 </tr>
 </tbody>
 </table>
