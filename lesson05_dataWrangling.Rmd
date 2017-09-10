@@ -22,6 +22,9 @@ For today's lesson, you will want to download/make a copy of the Github reposito
 Today's lesson will cover these topics:
 
 * merging; joining; stacking; concatenating
+
+We will cover these later:
+
 * adding labels and other notations
 * recoding
 * manipulating data types
