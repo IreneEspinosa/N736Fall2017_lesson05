@@ -57,9 +57,9 @@ You should also consider what you want to do if the 2 datasets have some columns
 
 Here is an example dataset:
 
-** Dataset `dataA` **
+**Dataset `dataA`**
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 library(readr)
@@ -71,9 +71,9 @@ kable(dataA)
 
 Let's suppose we want to add more subjects from `dataB`:
 
-** Dataset `dataB` **
+**Dataset `dataB`**
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 dataB <- read_csv("dataB.csv")
@@ -84,16 +84,16 @@ The first thing you'll notice is that only 2 variables (2 columns) `var1` and `v
 
 Suppose we want to keep ALL of the variables - for this (in `R code`) we will use the `dplyr` package and the `bind_rows` function. Learn more about `dplyr` at [http://dplyr.tidyverse.org/](http://dplyr.tidyverse.org/).
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 library(dplyr)
 dataAB <- bind_rows(dataA, dataB)
 ```
 
-** Dataset `dataAB` **
+**Dataset `dataAB`**
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 kable(dataAB)
@@ -103,7 +103,7 @@ Notice that the `NA`a are placed for the rows that do not have data for the vari
 
 You can also use the `union_all` function from `dplyr`.
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 dataAB <- union_all(dataA, dataB)
@@ -112,7 +112,7 @@ kable(dataAB)
 
 Suppose we want only want to keep the 2 columns that are in common. In `R` after using `bind_rows`, use the `select` command to just keep `id`, `var1` and `var2`.
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 dataAB_var12 <- dataAB %>%
@@ -120,7 +120,7 @@ dataAB_var12 <- dataAB %>%
 kable(dataAB_var12)
 ```
 
-### ** SAS CODE with sasHTML output using ODS output **
+### **SAS CODE with sasHTML output using ODS output**
 
 ```{r}
 library(SASmarkdown)
@@ -134,9 +134,9 @@ knitr::opts_chunk$set(engine="sashtml", engine.path=saspath,
 sas_collectcode()
 ```
 
-Load datasets - ** BE SURE TO CHANGE THE CODE BELOW FOR YOUR FILE LOCATION **
+Load datasets - **BE SURE TO CHANGE THE CODE BELOW FOR YOUR FILE LOCATION**
 
-** SAS CODE **
+**SAS CODE**
 
 ```{r, echo=TRUE, collectcode=TRUE}
 * ======================================;
@@ -156,7 +156,7 @@ run;
 
 After loading `dataA` and `dataB` the `set` command within the `DATA` step concatenates or "stacks" the 2 datasets together. The columns from both datasets are retained even if they are no in common. Missing data is inserted for rows that didn't have that variable in the other dataset.
 
-** SAS CODE **
+**SAS CODE**
 
 ```{r, echo=TRUE, collectcode=TRUE}
 
@@ -175,7 +175,7 @@ proc print data=dataAB noobs; run;
 
 If you want you can use the `drop` or `keep` commands in a `DATA` step to get rid of the variables not in common.
 
-** SAS CODE **
+**SAS CODE**
 
 ```{r, echo=TRUE, collectcode=TRUE}
   
@@ -210,7 +210,7 @@ I will not cover all of these, but do highlight some of the more common approach
 
 For this example we will work with `dataA` and `dataC` - here are what these 2 datasets look like:
 
-** R CODE **
+**R CODE**
 
 ```{r, echo=TRUE}
 dataC <- read_csv("dataC.csv")
@@ -267,7 +267,7 @@ dataAC_rightjoin <- right_join(dataA, dataC, by = "id")
 kable(dataAC_rightjoin)
 ```
 
-** SAS Code **
+**SAS Code**
 
 In `SAS` we'll used `PROC SORT` to sort both datasets by `ID` and then used a `MERGE` command in a `DATA` step.
 

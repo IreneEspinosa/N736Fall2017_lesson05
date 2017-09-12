@@ -166,8 +166,8 @@ $(document).ready(function () {
 <p>or whatever works for you and your dataset.</p>
 <p>You should also consider what you want to do if the 2 datasets have some columns in common and some that are not in common and whether you want the final merged file to keep only the columns that are in common or all of the columns regardless of whether they are in dataset 1 or 2.</p>
 <p>Here is an example dataset:</p>
-<p>** Dataset <code>dataA</code> **</p>
-<p>** R CODE **</p>
+<p><strong>Dataset <code>dataA</code></strong></p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>library(readr)
 dataA &lt;- read_csv(&quot;dataA.csv&quot;)
 
@@ -222,8 +222,8 @@ kable(dataA)</code></pre>
 </tbody>
 </table>
 <p>Let’s suppose we want to add more subjects from <code>dataB</code>:</p>
-<p>** Dataset <code>dataB</code> **</p>
-<p>** R CODE **</p>
+<p><strong>Dataset <code>dataB</code></strong></p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>dataB &lt;- read_csv(&quot;dataB.csv&quot;)
 kable(dataB)</code></pre>
 <table>
@@ -276,11 +276,11 @@ kable(dataB)</code></pre>
 </table>
 <p>The first thing you’ll notice is that only 2 variables (2 columns) <code>var1</code> and <code>var2</code> are in common for <code>dataA</code> and <code>dataB</code>. <code>dataA</code> has <code>var3</code> and <code>dataB</code> has <code>var4</code>.</p>
 <p>Suppose we want to keep ALL of the variables - for this (in <code>R code</code>) we will use the <code>dplyr</code> package and the <code>bind_rows</code> function. Learn more about <code>dplyr</code> at <a href="http://dplyr.tidyverse.org/" class="uri">http://dplyr.tidyverse.org/</a>.</p>
-<p>** R CODE **</p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>library(dplyr)
 dataAB &lt;- bind_rows(dataA, dataB)</code></pre>
-<p>** Dataset <code>dataAB</code> **</p>
-<p>** R CODE **</p>
+<p><strong>Dataset <code>dataAB</code></strong></p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>kable(dataAB)</code></pre>
 <table>
 <thead>
@@ -381,7 +381,7 @@ dataAB &lt;- bind_rows(dataA, dataB)</code></pre>
 </table>
 <p>Notice that the <code>NA</code>a are placed for the rows that do not have data for the variables that were not in common: <code>var3</code> and <code>var4</code>.</p>
 <p>You can also use the <code>union_all</code> function from <code>dplyr</code>.</p>
-<p>** R CODE **</p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>dataAB &lt;- union_all(dataA, dataB)
 kable(dataAB)</code></pre>
 <table>
@@ -482,7 +482,7 @@ kable(dataAB)</code></pre>
 </tbody>
 </table>
 <p>Suppose we want only want to keep the 2 columns that are in common. In <code>R</code> after using <code>bind_rows</code>, use the <code>select</code> command to just keep <code>id</code>, <code>var1</code> and <code>var2</code>.</p>
-<p>** R CODE **</p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>dataAB_var12 &lt;- dataAB %&gt;%
   select(id,var1,var2)
 kable(dataAB_var12)</code></pre>
@@ -559,9 +559,9 @@ kable(dataAB_var12)</code></pre>
 </table>
 </div>
 <div id="sas-code-with-sashtml-output-using-ods-output" class="section level3">
-<h3>** SAS CODE with sasHTML output using ODS output **</h3>
-<p>Load datasets - ** BE SURE TO CHANGE THE CODE BELOW FOR YOUR FILE LOCATION **</p>
-<p>** SAS CODE **</p>
+<h3><strong>SAS CODE with sasHTML output using ODS output</strong></h3>
+<p>Load datasets - <strong>BE SURE TO CHANGE THE CODE BELOW FOR YOUR FILE LOCATION</strong></p>
+<p><strong>SAS CODE</strong></p>
 <pre class="sashtml"><code>* ======================================;
 * load dataA;
 * ======================================;
@@ -576,7 +576,7 @@ proc import datafile='C:\MyGithub\N736Fall2017_lesson05\dataB.csv'
   out=dataB dbms=csv;
 run;</code></pre>
 <p>After loading <code>dataA</code> and <code>dataB</code> the <code>set</code> command within the <code>DATA</code> step concatenates or “stacks” the 2 datasets together. The columns from both datasets are retained even if they are no in common. Missing data is inserted for rows that didn’t have that variable in the other dataset.</p>
-<p>** SAS CODE **</p>
+<p><strong>SAS CODE</strong></p>
 <pre class="sashtml"><code>
 * ======================================;
 * concatenate dataA and dataB
@@ -834,7 +834,7 @@ m
 <br>
 </div>
 <p>If you want you can use the <code>drop</code> or <code>keep</code> commands in a <code>DATA</code> step to get rid of the variables not in common.</p>
-<p>** SAS CODE **</p>
+<p><strong>SAS CODE</strong></p>
 <pre class="sashtml"><code>  
 * ======================================;
 * keep only var1 and var2;
@@ -1018,7 +1018,7 @@ m
 <p>Also read through the details on “joins” in the “R for Data Science” book at <a href="http://r4ds.had.co.nz/relational-data.html#understanding-joins" class="uri">http://r4ds.had.co.nz/relational-data.html#understanding-joins</a>.</p>
 <p>I will not cover all of these, but do highlight some of the more common approaches.</p>
 <p>For this example we will work with <code>dataA</code> and <code>dataC</code> - here are what these 2 datasets look like:</p>
-<p>** R CODE **</p>
+<p><strong>R CODE</strong></p>
 <pre class="r"><code>dataC &lt;- read_csv(&quot;dataC.csv&quot;)</code></pre>
 <p>Dataset <code>dataA</code></p>
 <pre class="r"><code>kable(dataA)</code></pre>
@@ -1421,7 +1421,7 @@ kable(dataAC_rightjoin)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>** SAS Code **</p>
+<p><strong>SAS Code</strong></p>
 <p>In <code>SAS</code> we’ll used <code>PROC SORT</code> to sort both datasets by <code>ID</code> and then used a <code>MERGE</code> command in a <code>DATA</code> step.</p>
 <p>Load the datasets <code>dataA</code> and <code>dataC</code>.</p>
 <pre class="sashtml"><code>* ======================================;
